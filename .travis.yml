@@ -1,6 +1,6 @@
 language: go
 
-script: go test github.com/sanbit/cmap
+script: go test -test.coverprofile= github.com/sanbit/cmap
 
 go:
   - 1.3
