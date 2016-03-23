@@ -1,0 +1,2 @@
+# cmap
+ConcurrentHashMap for Go
