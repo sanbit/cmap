@@ -1,6 +1,6 @@
 language: go
 
-script: make clean && go test github.com/sanbit/cmap
+script: go test github.com/sanbit/cmap
 
 go:
   - 1.6
