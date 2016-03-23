@@ -3,4 +3,5 @@ language: go
 script: go test github.com/sanbit/cmap
 
 go:
-  - 1.6
+  - 1.3
+  - tip
