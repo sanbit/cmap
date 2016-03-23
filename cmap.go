@@ -1,7 +1,6 @@
 package cmap
 
 import (
-	"fmt"
 	"hash/fnv"
 	"sync"
 )
@@ -12,6 +11,11 @@ type ConcurrentMap struct {
 }
 
 func NewConcurrentMap(bucketSize int) *ConcurrentMap {
+
+	if bucketSize <= 0 {
+		panic("illegal param bucketSize<=0")
+	}
+
 	m := &ConcurrentMap{
 		buckets: make([]map[string]interface{}, bucketSize),
 		locks:   make([]sync.RWMutex, bucketSize),
@@ -45,8 +49,6 @@ func (m *ConcurrentMap) Get(key string) interface{} {
 func (m *ConcurrentMap) Set(key string, value interface{}) {
 	slot := m.hash(key) % len(m.buckets)
 
-	//fmt.Println(slot)
-
 	m.locks[slot].Lock()
 	m.buckets[slot][key] = value
 	m.locks[slot].Unlock()
@@ -64,13 +66,4 @@ func (m *ConcurrentMap) hash(key string) int {
 	hasher.Write([]byte(key))
 
 	return int(hasher.Sum32())
-}
-
-func main() {
-	m := NewConcurrentMap(10)
-
-	m.Set("aaa", 9)
-	m.Set("bbb", 9)
-	m.Set("ccc", 9)
-	fmt.Println(m.Len())
 }
